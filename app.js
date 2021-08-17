@@ -1,22 +1,30 @@
-var wellcomeText;
-while(1) {
-    let person ="";
-    person = prompt("Please enter your name:","Your Name");
-    wellcomeText = "Hello " + person + "! How are you today?";
-    if(person!=null && person!="") break;
+var myStorage = window.localStorage;
+if(myStorage.getItem("userName")==null) {
+    while(1) {
+        let userName ="";
+        userName = prompt("Please enter your name:","Your Name");
+        if(userName!=null && userName!="") {
+            myStorage.setItem("userName",userName);
+            break;
+        }
+    }
+    while(1) {
+        let userDOB="";
+        userDOB = prompt("Please enter your BirthDay:","YYYY-MM-DD");
+        if(userDOB!=null && userDOB!="") {
+            myStorage.setItem("userDOB",userDOB);
+            break;
+        }
+    }
 }
 
 const wellcomeTextElement = document.createElement("h1"); 
-wellcomeTextElement.innerHTML = wellcomeText;
+wellcomeTextElement.innerHTML = `Hello ${myStorage.getItem("userName")}!! How are you today?`;
 wellcomeTextElement.style.textAlign="center";                  
 document.body.appendChild(wellcomeTextElement);
 
-var dobText="";
-while(1) {
-    dobText = prompt("Please enter your BirthDay:","YYYY-MM-DD");
-    if(dobText!=null && dobText!="") break;
-}
-const dobDate= new Date(dobText);
+
+const dobDate= new Date(myStorage.getItem("userDOB"));
 
 const ageTextElement=document.createElement("h1");
 ageTextElement.innerText="";
