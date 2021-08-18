@@ -73,6 +73,7 @@ function runVideo() {
 function getImage() {
     var dataURL = localStorage.getItem("image");
     document.getElementById("img").src=dataURL;
+    if(dataURL=="" || dataURL==null) document.getElementById("img").style.display="none";
 }
 runVideo();
 getImage();
@@ -82,7 +83,7 @@ document.getElementById("refreshbutton").addEventListener("click",()=>{
     document.getElementById("agetext").innerText="";
     document.getElementById("img").setAttribute("src","");
     document.getElementById("video").style.display="block";
-    document.getElementById("capturebutton").style.display="inline";
+    document.getElementById("capturebutton").style.display="block";
     document.getElementById("refreshbutton").style.display="none";
     localStorage.clear();
     runVideo();
@@ -94,6 +95,7 @@ document.getElementById("capturebutton").addEventListener("click", ()=>{
     document.getElementById("video").style.display="none";
     document.getElementById("capturebutton").style.display="none";
     document.getElementById("refreshbutton").style.display="block";
+    document.getElementById("img").style.display="block";
     getImage();
 });
 setInterval(() => {
