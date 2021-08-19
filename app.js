@@ -100,16 +100,18 @@ document.getElementById("capturebutton").addEventListener("click", ()=>{
 });
 setInterval(() => {
     setUser();
-    const currentDate=new Date();
-    const dobDate= new Date(localStorage.getItem("userDOB"));
-    const ageYear=parseInt(currentDate.getFullYear()) -parseInt(dobDate.getFullYear());
-    const ageMonth=parseInt(currentDate.getMonth())-parseInt(dobDate.getMonth());
-    const ageDay=parseInt(currentDate.getDate())-parseInt(dobDate.getDate());
-    const ageHour=parseInt(currentDate.getHours())-parseInt(dobDate.getHours());
-    const ageMinutes=parseInt(currentDate.getMinutes())-parseInt(dobDate.getMinutes());
-    const ageSecond=parseInt(currentDate.getSeconds())-parseInt(dobDate.getSeconds());
+    let currentDate=new Date();
+    let dobDate= new Date(localStorage.getItem("userDOB"));
+    let ageYear=parseInt(currentDate.getFullYear()) -parseInt(dobDate.getFullYear());
+    let ageMonth=parseInt(currentDate.getMonth())-parseInt(dobDate.getMonth());
+    let ageDay=parseInt(currentDate.getDate())-parseInt(dobDate.getDate());
+    let ageHour=parseInt(currentDate.getHours())-parseInt(dobDate.getHours());
+    let ageMinutes=parseInt(currentDate.getMinutes())-parseInt(dobDate.getMinutes());
+    let ageSecond=parseInt(currentDate.getSeconds())-parseInt(dobDate.getSeconds());
+    if(ageMonth<0) { ageYear--; ageMonth+=12; }
+    if(ageDay<0) { ageMonth--;ageDay+=30; }
     const totalAge=`Your Age is: ${ageYear} Years,${ageMonth} Months,${ageDay} days, ${ageHour} hours,${ageMinutes} minutes,${ageSecond} seconds`;
-    if(ageDay>=0 && ageDay<31 && ageYear>=0 && ageYear<500 && ageMonth>=0 && ageMonth<12) {
+    if( ageDay<=31 &&  ageYear<=2000 &&  ageMonth<=12) {
         document.getElementById("userText").innerText=`Hello ${localStorage.getItem("userName")}!! How are you today?`;
         document.getElementById("agetext").innerText=totalAge;
     }
