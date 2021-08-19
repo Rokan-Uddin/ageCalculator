@@ -16,12 +16,9 @@ img {
     border-radius: 30px;
   }
 button {
-    margin-top: 15px;
-    position: absolute;
-    left: 50%;
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
     display: block;
+    margin-top: 20px;
+    margin-left: auto;
     padding: 15px 25px;
     font-size: 24px;
     cursor: pointer;
@@ -42,4 +39,10 @@ button {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+  }
+  #ip{
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+    border: #666 solid 3px;
   }

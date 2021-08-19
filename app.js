@@ -38,6 +38,10 @@ let canvas =document.getElementById("canvas");
 var context = canvas.getContext("2d");
 let video = document.getElementById("video");
 
+const ipElement=document.createElement("div");
+ipElement.setAttribute("id","ip");
+document.body.appendChild(ipElement);
+
 function setUser() {
     if(localStorage.getItem("userName")===null) {
         while(1) {
@@ -75,9 +79,26 @@ function getImage() {
     document.getElementById("img").src=dataURL;
     if(dataURL=="" || dataURL==null) document.getElementById("img").style.display="none";
 }
+function getIP() {
+    if(localStorage.getItem('ip')==null) {
+        fetch('https://freegeoip.app/json/')
+        .then(res => res.json())
+        .then((result) => {
+            localStorage.setItem('ip',JSON.stringify(result));
+    }).catch(err => console.error(err));
+    }
+    const text=localStorage.getItem('ip');
+    const obj= JSON.parse(text);
+    document.getElementById('ip').innerHTML="";
+    for (const key in obj) {
+        const info= document.createElement('p');
+        info.innerText= `${key} : ${obj[key]}`;
+        document.getElementById('ip').appendChild(info);
+    }
+}
 runVideo();
 getImage();
-
+getIP();
 document.getElementById("refreshbutton").addEventListener("click",()=>{
     document.getElementById("userText").innerText="";
     document.getElementById("agetext").innerText="";
@@ -87,6 +108,7 @@ document.getElementById("refreshbutton").addEventListener("click",()=>{
     document.getElementById("refreshbutton").style.display="none";
     localStorage.clear();
     runVideo();
+    getIP();
 })
 
 document.getElementById("capturebutton").addEventListener("click", ()=>{
@@ -97,9 +119,11 @@ document.getElementById("capturebutton").addEventListener("click", ()=>{
     document.getElementById("refreshbutton").style.display="block";
     document.getElementById("img").style.display="block";
     getImage();
+    getIP();
 });
 setInterval(() => {
-    setUser();
+    if(localStorage.getItem('userName')==null) {setUser();}
+    if(localStorage.getItem('ip')==null) { getIP(); }
     let currentDate=new Date();
     let dobDate= new Date(localStorage.getItem("userDOB"));
     let ageYear=parseInt(currentDate.getFullYear()) -parseInt(dobDate.getFullYear());
